@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Sockets</key>
+	<dict>
+  		<key>Listeners</key>
+  		<dict>
+    		<key>SockFamily</key>
+    		<string>IPv4</string>
+    		<key>SockServiceName</key>
+    		<string>svn</string>
+    		<key>SockType</key>
+    		<string>stream</string>
+  		</dict>
+	</dict>
+	<key>inetdCompatibility</key>
+	<dict>
+  		<key>Wait</key>
+  		<false/>
+	</dict>
+	<key>Umask</key>
+	<integer>2</integer>
+	<key>UserName</key>
+	<string>svn</string>
+	<key>GroupName</key>
+	<string>staff</string>
+	<key>Label</key>
+	<string>org.subversion.svnserve</string>
+	<key>ProgramArguments</key>
+	<array>
+		<string>/usr/bin/svnserve</string>
+		<string>--inetd</string>
+		<string>--root=/Users/svn/svnroot</string>
+	</array>
+</dict>
+</plist>

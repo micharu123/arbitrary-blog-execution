@@ -1,0 +1,359 @@
+diff -Naur pbc-0.5.4/ecc/a_param.c pbc-0.5.4-patched/ecc/a_param.c
+--- pbc-0.5.4/ecc/a_param.c	2009-08-24 03:22:13.000000000 +0200
++++ pbc-0.5.4-patched/ecc/a_param.c	2009-08-25 17:26:56.000000000 +0200
+@@ -1377,18 +1377,18 @@
+ 
+ // Public interface for type A pairings:
+ 
+-int pbc_param_init_a(pbc_param_ptr par, const char *(*tab)(const char *)) {
++int pbc_param_init_a(pbc_param_ptr par, const char *(*lookup)(const char *, void*),void* tab) {
+   a_param_init(par);
+   a_param_ptr p = par->data;
+ 
+   int err = 0;
+-  err += lookup_mpz(p->q, tab, "q");
+-  err += lookup_mpz(p->r, tab, "r");
+-  err += lookup_mpz(p->h, tab, "h");
+-  err += lookup_int(&p->exp2, tab, "exp2");
+-  err += lookup_int(&p->exp1, tab, "exp1");
+-  err += lookup_int(&p->sign1, tab, "sign1");
+-  err += lookup_int(&p->sign0, tab, "sign0");
++  err += lookup_mpz(p->q, lookup, "q", tab);
++  err += lookup_mpz(p->r, lookup, "r", tab);
++  err += lookup_mpz(p->h, lookup, "h", tab);
++  err += lookup_int(&p->exp2, lookup, "exp2", tab);
++  err += lookup_int(&p->exp1, lookup, "exp1", tab);
++  err += lookup_int(&p->sign1, lookup, "sign1", tab);
++  err += lookup_int(&p->sign0, lookup, "sign0", tab);
+   return err;
+ }
+ 
+@@ -1873,14 +1873,14 @@
+ 
+ // Public interface:
+ 
+-int pbc_param_init_a1(pbc_param_ptr par, const char *(*tab)(const char *)) {
++int pbc_param_init_a1(pbc_param_ptr par, const char *(*lookup)(const char *, void*), void* tab) {
+   a1_init(par);
+   a1_param_ptr p = par->data;
+ 
+   int err = 0;
+-  err += lookup_mpz(p->p, tab, "p");
+-  err += lookup_mpz(p->n, tab, "n");
+-  err += lookup_int(&p->l, tab, "l");
++  err += lookup_mpz(p->p, lookup, "p", tab);
++  err += lookup_mpz(p->n, lookup, "n", tab);
++  err += lookup_int(&p->l, lookup, "l", tab);
+   return err;
+ }
+ 
+diff -Naur pbc-0.5.4/ecc/d_param.c pbc-0.5.4-patched/ecc/d_param.c
+--- pbc-0.5.4/ecc/d_param.c	2009-08-24 03:22:13.000000000 +0200
++++ pbc-0.5.4-patched/ecc/d_param.c	2009-08-25 17:27:21.000000000 +0200
+@@ -1016,30 +1016,30 @@
+ 
+ // Public interface:
+ 
+-int pbc_param_init_d(pbc_param_ptr par, const char *(*tab)(const char *)) {
++int pbc_param_init_d(pbc_param_ptr par, const char *(*lookup)(const char *, void*), void* tab) {
+   d_param_init(par);
+   d_param_ptr p = par->data;
+   char s[80];
+   int i, d;
+ 
+   int err = 0;
+-  err += lookup_mpz(p->q, tab, "q");
+-  err += lookup_mpz(p->n, tab, "n");
+-  err += lookup_mpz(p->h, tab, "h");
+-  err += lookup_mpz(p->r, tab, "r");
+-  err += lookup_mpz(p->a, tab, "a");
+-  err += lookup_mpz(p->b, tab, "b");
+-  err += lookup_int(&p->k, tab, "k");
+-  err += lookup_mpz(p->nk, tab, "nk");
+-  err += lookup_mpz(p->hk, tab, "hk");
+-  err += lookup_mpz(p->nqr, tab, "nqr");
++  err += lookup_mpz(p->q, lookup, "q", tab);
++  err += lookup_mpz(p->n, lookup, "n", tab);
++  err += lookup_mpz(p->h, lookup, "h", tab);
++  err += lookup_mpz(p->r, lookup, "r", tab);
++  err += lookup_mpz(p->a, lookup, "a", tab);
++  err += lookup_mpz(p->b, lookup, "b", tab);
++  err += lookup_int(&p->k, lookup, "k", tab);
++  err += lookup_mpz(p->nk, lookup, "nk", tab);
++  err += lookup_mpz(p->hk, lookup, "hk", tab);
++  err += lookup_mpz(p->nqr, lookup, "nqr", tab);
+ 
+   d = p->k / 2;
+   p->coeff = pbc_realloc(p->coeff, sizeof(mpz_t) * d);
+   for (i=0; i<d; i++) {
+     sprintf(s, "coeff%d", i);
+     mpz_init(p->coeff[i]);
+-    err += lookup_mpz(p->coeff[i], tab, s);
++    err += lookup_mpz(p->coeff[i], lookup, s, tab);
+   }
+   return err;
+ }
+diff -Naur pbc-0.5.4/ecc/e_param.c pbc-0.5.4-patched/ecc/e_param.c
+--- pbc-0.5.4/ecc/e_param.c	2009-08-24 03:22:13.000000000 +0200
++++ pbc-0.5.4-patched/ecc/e_param.c	2009-08-25 17:27:39.000000000 +0200
+@@ -886,20 +886,20 @@
+ 
+ // Public interface:
+ 
+-int pbc_param_init_e(pbc_param_ptr par, const char *(*tab)(const char *)) {
++int pbc_param_init_e(pbc_param_ptr par, const char *(*lookup)(const char *, void*), void* tab) {
+   e_init(par);
+   e_param_ptr p = par->data;
+ 
+   int err = 0;
+-  err += lookup_mpz(p->q, tab, "q");
+-  err += lookup_mpz(p->r, tab, "r");
+-  err += lookup_mpz(p->h, tab, "h");
+-  err += lookup_mpz(p->a, tab, "a");
+-  err += lookup_mpz(p->b, tab, "b");
+-  err += lookup_int(&p->exp2, tab, "exp2");
+-  err += lookup_int(&p->exp1, tab, "exp1");
+-  err += lookup_int(&p->sign1, tab, "sign1");
+-  err += lookup_int(&p->sign0, tab, "sign0");
++  err += lookup_mpz(p->q, lookup, "q", tab);
++  err += lookup_mpz(p->r, lookup, "r", tab);
++  err += lookup_mpz(p->h, lookup, "h", tab);
++  err += lookup_mpz(p->a, lookup, "a", tab);
++  err += lookup_mpz(p->b, lookup, "b", tab);
++  err += lookup_int(&p->exp2, lookup, "exp2", tab);
++  err += lookup_int(&p->exp1, lookup, "exp1", tab);
++  err += lookup_int(&p->sign1, lookup, "sign1", tab);
++  err += lookup_int(&p->sign0, lookup, "sign0", tab);
+   return err;
+ }
+ 
+diff -Naur pbc-0.5.4/ecc/f_param.c pbc-0.5.4-patched/ecc/f_param.c
+--- pbc-0.5.4/ecc/f_param.c	2009-08-24 03:22:13.000000000 +0200
++++ pbc-0.5.4-patched/ecc/f_param.c	2009-08-25 17:28:03.000000000 +0200
+@@ -448,17 +448,17 @@
+ 
+ // Public interface:
+ 
+-int pbc_param_init_f(pbc_param_ptr par, const char *(*tab)(const char *)) {
++int pbc_param_init_f(pbc_param_ptr par, const char *(*lookup)(const char *, void*), void* tab) {
+   f_init(par);
+   f_param_ptr p = par->data;
+ 
+   int err = 0;
+-  err += lookup_mpz(p->q, tab, "q");
+-  err += lookup_mpz(p->r, tab, "r");
+-  err += lookup_mpz(p->b, tab, "b");
+-  err += lookup_mpz(p->beta, tab, "beta");
+-  err += lookup_mpz(p->alpha0, tab, "alpha0");
+-  err += lookup_mpz(p->alpha1, tab, "alpha1");
++  err += lookup_mpz(p->q, lookup, "q", tab);
++  err += lookup_mpz(p->r, lookup, "r", tab);
++  err += lookup_mpz(p->b, lookup, "b", tab);
++  err += lookup_mpz(p->beta, lookup, "beta", tab);
++  err += lookup_mpz(p->alpha0, lookup, "alpha0", tab);
++  err += lookup_mpz(p->alpha1, lookup, "alpha1", tab);
+   return err;
+ }
+ 
+diff -Naur pbc-0.5.4/ecc/g_param.c pbc-0.5.4-patched/ecc/g_param.c
+--- pbc-0.5.4/ecc/g_param.c	2009-08-24 03:22:13.000000000 +0200
++++ pbc-0.5.4-patched/ecc/g_param.c	2009-08-25 17:28:22.000000000 +0200
+@@ -1362,28 +1362,28 @@
+ 
+ // Public interface:
+ 
+-int pbc_param_init_g(pbc_param_ptr par, const char *(*tab)(const char *)) {
++int pbc_param_init_g(pbc_param_ptr par, const char *(*lookup)(const char *, void*), void* tab) {
+   g_init(par);
+   g_param_ptr p = par->data;
+   char s[80];
+ 
+   int err = 0;
+-  err += lookup_mpz(p->q, tab, "q");
+-  err += lookup_mpz(p->n, tab, "n");
+-  err += lookup_mpz(p->h, tab, "h");
+-  err += lookup_mpz(p->r, tab, "r");
+-  err += lookup_mpz(p->a, tab, "a");
+-  err += lookup_mpz(p->b, tab, "b");
+-  err += lookup_mpz(p->nk, tab, "nk");
+-  err += lookup_mpz(p->hk, tab, "hk");
+-  err += lookup_mpz(p->nqr, tab, "nqr");
++  err += lookup_mpz(p->q, lookup, "q", tab);
++  err += lookup_mpz(p->n, lookup, "n", tab);
++  err += lookup_mpz(p->h, lookup, "h", tab);
++  err += lookup_mpz(p->r, lookup, "r", tab);
++  err += lookup_mpz(p->a, lookup, "a", tab);
++  err += lookup_mpz(p->b, lookup, "b", tab);
++  err += lookup_mpz(p->nk, lookup, "nk", tab);
++  err += lookup_mpz(p->hk, lookup, "hk", tab);
++  err += lookup_mpz(p->nqr, lookup, "nqr", tab);
+ 
+   p->coeff = pbc_realloc(p->coeff, sizeof(mpz_t) * 5);
+   int i;
+   for (i = 0; i < 5; i++) {
+     sprintf(s, "coeff%d", i);
+     mpz_init(p->coeff[i]);
+-    err += lookup_mpz(p->coeff[i], tab, s);
++    err += lookup_mpz(p->coeff[i], lookup, s, tab);
+   }
+   return err;
+ }
+diff -Naur pbc-0.5.4/ecc/param.c pbc-0.5.4-patched/ecc/param.c
+--- pbc-0.5.4/ecc/param.c	2009-08-24 03:22:13.000000000 +0200
++++ pbc-0.5.4-patched/ecc/param.c	2009-08-25 17:35:23.000000000 +0200
+@@ -137,8 +137,8 @@
+   mpz_clear(z);
+ }
+ 
+-int lookup_mpz(mpz_t z, const char *(*tab)(const char *), const char *key) {
+-  const char *data = tab(key);
++int lookup_mpz(mpz_t z, const char *(*lookup)(const char *, void*), const char *key, void* tab) {
++  const char *data = lookup(key, tab);
+   if (!data) {
+     pbc_error("missing param: `%s'", key);
+     return 1;
+@@ -147,9 +147,9 @@
+   return 0;
+ }
+ 
+-int lookup_int(int *n, const char *(*tab)(const char *), const char *key) {
++int lookup_int(int *n, const char *(*lookup)(const char *, void*), const char *key, void* tab) {
+   mpz_t z;
+-  const char *data = tab(key);
++  const char *data = lookup(key,tab);
+   if (!data) {
+     pbc_error("missing param: `%s'", key);
+     return 1;
+@@ -163,19 +163,21 @@
+   return 0;
+ }
+ 
+-static int param_set_tab(pbc_param_t par, symtab_t tab) {
+-  const char *lookup(const char *key) {
+-    if (!symtab_has(tab, key)) {
+-      pbc_error("missing param: `%s'", key);
+-      return NULL;
+-    }
+-    return symtab_at(tab, key);
++const char* lookup(const char *key, void* tab) {
++  if (!symtab_has((symtab_ptr)tab, key)) {
++    pbc_error("missing param: `%s'", key);
++    return NULL;
+   }
+-  const char *s = lookup("type");
++  return symtab_at((symtab_ptr)tab, key);
++}
++
++
++static int param_set_tab(pbc_param_t par, symtab_t tab) {
++  const char *s = lookup("type", (void*)tab);
+ 
+   static struct {
+     char *s;
+-    int (*fun)(pbc_param_ptr, const char *(*)(const char *));
++    int (*fun)(pbc_param_ptr, const char *(*)(const char *, void*), void*);
+   } funtab[] = {
+       { "a", pbc_param_init_a },
+       { "d", pbc_param_init_d },
+@@ -189,7 +189,7 @@
+     unsigned int i;
+     for(i = 0; i < sizeof(funtab)/sizeof(*funtab); i++) {
+       if (!strcmp(s, funtab[i].s)) {
+-        res = funtab[i].fun(par, lookup);
++        res = funtab[i].fun(par, lookup, (void*)tab);
+         if (res) pbc_error("bad pairing parameters");
+         return res;
+       }
+diff -Naur pbc-0.5.4/ecc/param.h pbc-0.5.4-patched/ecc/param.h
+--- pbc-0.5.4/ecc/param.h	2009-08-24 03:22:13.000000000 +0200
++++ pbc-0.5.4-patched/ecc/param.h	2009-08-25 17:28:56.000000000 +0200
+@@ -14,8 +14,8 @@
+ void param_out_int(FILE *stream, char *s, int i);
+ // TODO: Replace with a stdarg function, e.g.
+ //   err = lookup("ZZi", "p", "n", "l",  p->p, p->n, &p->l);
+-int lookup_int(int *n, const char *(*tab)(const char *), const char *key);
+-int lookup_mpz(mpz_t z, const char *(*tab)(const char *), const char *key);
++int lookup_int(int *n, const char *(*lookup)(const char *, void*), const char *key, void* tab);
++int lookup_mpz(mpz_t z, const char *(*lookup)(const char *, void*), const char *key, void* tab);
+ 
+ #pragma GCC visibility pop
+ 
+diff -Naur pbc-0.5.4/include/pbc_a1_param.h pbc-0.5.4-patched/include/pbc_a1_param.h
+--- pbc-0.5.4/include/pbc_a1_param.h	2009-08-24 03:22:13.000000000 +0200
++++ pbc-0.5.4-patched/include/pbc_a1_param.h	2009-08-25 17:24:14.000000000 +0200
+@@ -4,7 +4,7 @@
+ #ifndef __PBC_A1_PARAM_H__
+ #define __PBC_A1_PARAM_H__
+ 
+-int pbc_param_init_a1(pbc_param_ptr par, const char *(*tab)(const char *));
++int pbc_param_init_a1(pbc_param_ptr par, const char *(*lookup)(const char *, void*), void* tab);
+ 
+ /*@manual a1param
+ Generate type A1 pairing parameters and store them in 'p'.  The group order
+diff -Naur pbc-0.5.4/include/pbc_a_param.h pbc-0.5.4-patched/include/pbc_a_param.h
+--- pbc-0.5.4/include/pbc_a_param.h	2009-08-24 03:22:13.000000000 +0200
++++ pbc-0.5.4-patched/include/pbc_a_param.h	2009-08-25 17:23:30.000000000 +0200
+@@ -2,10 +2,14 @@
+ 
+ // Requires:
+ // * param.h
++// * symtab.h
+ #ifndef __PBC_A_PARAM_H__
+ #define __PBC_A_PARAM_H__
+ 
+-int pbc_param_init_a(pbc_param_ptr par, const char *(*tab)(const char *));
++
++int pbc_param_init_a(pbc_param_ptr par,
++		const char *(*lookup)(const char *, void*),
++		void* tab);
+ 
+ /*@manual aparam
+ Generate type A pairing parameters and store them in 'p',
+diff -Naur pbc-0.5.4/include/pbc_d_param.h pbc-0.5.4-patched/include/pbc_d_param.h
+--- pbc-0.5.4/include/pbc_d_param.h	2009-08-24 03:22:13.000000000 +0200
++++ pbc-0.5.4-patched/include/pbc_d_param.h	2009-08-25 17:24:33.000000000 +0200
+@@ -6,7 +6,7 @@
+ #ifndef __PBC_D_PARAM_H__
+ #define __PBC_D_PARAM_H__
+ 
+-int pbc_param_init_d(pbc_param_ptr par, const char *(*tab)(const char *));
++int pbc_param_init_d(pbc_param_ptr par, const char *(*lookup)(const char *, void*), void* tab);
+ 
+ /*@manual dparam
+ Type D curves are generated using the complex multiplication (CM) method.  This
+diff -Naur pbc-0.5.4/include/pbc_e_param.h pbc-0.5.4-patched/include/pbc_e_param.h
+--- pbc-0.5.4/include/pbc_e_param.h	2009-08-24 03:22:13.000000000 +0200
++++ pbc-0.5.4-patched/include/pbc_e_param.h	2009-08-25 17:24:46.000000000 +0200
+@@ -5,7 +5,7 @@
+ #ifndef __PBC_E_PARAM_H__
+ #define __PBC_E_PARAM_H__
+ 
+-int pbc_param_init_e(pbc_param_ptr par, const char *(*tab)(const char *));
++int pbc_param_init_e(pbc_param_ptr par, const char *(*lookup)(const char *, void*), void* tab);
+ 
+ /*@manual eparam
+ Generate type E pairing parameters and store them in 'p',
+diff -Naur pbc-0.5.4/include/pbc_f_param.h pbc-0.5.4-patched/include/pbc_f_param.h
+--- pbc-0.5.4/include/pbc_f_param.h	2009-08-24 03:22:13.000000000 +0200
++++ pbc-0.5.4-patched/include/pbc_f_param.h	2009-08-25 17:24:59.000000000 +0200
+@@ -5,7 +5,7 @@
+ #ifndef __PBC_F_PARAM_H__
+ #define __PBC_F_PARAM_H__
+ 
+-int pbc_param_init_f(pbc_param_ptr par, const char *(*tab)(const char *));
++int pbc_param_init_f(pbc_param_ptr par, const char *(*lookup)(const char *, void*), void* tab);
+ 
+ /*@manual fparam
+ Generate type F pairing parameters and store them in 'p'.
+diff -Naur pbc-0.5.4/include/pbc_g_param.h pbc-0.5.4-patched/include/pbc_g_param.h
+--- pbc-0.5.4/include/pbc_g_param.h	2009-08-24 03:22:13.000000000 +0200
++++ pbc-0.5.4-patched/include/pbc_g_param.h	2009-08-25 17:36:18.000000000 +0200
+@@ -6,7 +6,7 @@
+ #ifndef __PBC_G_PARAM_H__
+ #define __PBC_G_PARAM_H__
+ 
+-int pbc_param_init_g(pbc_param_ptr par, const char *(*tab)(const char *));
++int pbc_param_init_g(pbc_param_ptr par, const char *(*tab)(const char *,void*),void*);
+ 
+ /*@manual gparam
+ Type G curves are generated using the complex multiplication (CM) method.  This

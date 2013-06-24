@@ -1,0 +1,16 @@
+--- Makefile.old	2013-06-24 13:53:39.310958341 -0700
++++ Makefile	2013-06-24 13:53:50.451101666 -0700
+@@ -16,10 +16,10 @@
+ ############################################################################
+ 
+ #CFLAGS = -O -Wall
+-AR              = ar
+-CC              = gcc
++AR              = arm-linux-gnueabi-ar
++CC              = arm-linux-gnueabi-gcc
+ CFLAGS          = -g -Wall
+-CINCLUDES	= -I ../../opensource/include/libxml2
++CINCLUDES	= -I ../../opensource_arm/include/libxml2
+ 
+ LLRPDEF         = ../../Definitions/Core/llrp-1x0-def.xml
+ 

@@ -1,0 +1,12 @@
+402c402
+<           <xsl:when test='@enumeration and @type = "u8v"'>llrp_u8v_t</xsl:when>
+---
+>           <xsl:when test='@enumeration and @type = "u8v"'>llrp_u8v_t </xsl:when>
+404c404
+<           <xsl:otherwise>llrp_<xsl:value-of select='@type'/>_t</xsl:otherwise>
+---
+>           <xsl:otherwise>llrp_<xsl:value-of select='@type'/>_t </xsl:otherwise>
+410c410
+<           <xsl:when test='@enumeration'>e<xsl:value-of select='@name'/></xsl:when>
+---
+>           <xsl:when test='@enumeration'> e<xsl:value-of select='@name'/></xsl:when>

@@ -1,0 +1,13 @@
+--- Makefile.old	2013-06-24 13:30:09.256614015 -0700
++++ Makefile	2013-06-24 13:30:19.744752770 -0700
+@@ -16,8 +16,8 @@
+ ############################################################################
+ 
+ #CFLAGS     = -O -Wall -I..
+-AR          = ar
+-CC          = gcc
++AR          = arm-linux-gnueabi-ar
++CC          = arm-linux-gnueabi-gcc
+ CFLAGS      = -g -Wall -I..
+ 
+ LLRPORGDEF      = ../../../Definitions/LLRP.org/LLRPOrgExampleDef.xml

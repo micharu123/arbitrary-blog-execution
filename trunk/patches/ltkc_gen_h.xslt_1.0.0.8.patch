@@ -1,12 +1,21 @@
-402c402
-<           <xsl:when test='@enumeration and @type = "u8v"'>llrp_u8v_t</xsl:when>
----
->           <xsl:when test='@enumeration and @type = "u8v"'>llrp_u8v_t </xsl:when>
-404c404
-<           <xsl:otherwise>llrp_<xsl:value-of select='@type'/>_t</xsl:otherwise>
----
->           <xsl:otherwise>llrp_<xsl:value-of select='@type'/>_t </xsl:otherwise>
-410c410
-<           <xsl:when test='@enumeration'>e<xsl:value-of select='@name'/></xsl:when>
----
->           <xsl:when test='@enumeration'> e<xsl:value-of select='@name'/></xsl:when>
+--- /tmp/orig/LTK/LTKC/Library/ltkc_gen_h.xslt	2011-10-31 12:27:29.000000000 -0400
++++ ./ltkc_gen_h.xslt	2013-06-24 00:32:33.000000000 -0400
+@@ -399,15 +399,15 @@
+       <xsl:with-param name='StructName' select='$StructName'/>
+       <xsl:with-param name='FieldType'>
+         <xsl:choose>
+-          <xsl:when test='@enumeration and @type = "u8v"'>llrp_u8v_t</xsl:when>
++          <xsl:when test='@enumeration and @type = "u8v"'>llrp_u8v_t </xsl:when>
+           <xsl:when test='@enumeration'>LLRP_tE<xsl:value-of select='@enumeration'/></xsl:when>
+-          <xsl:otherwise>llrp_<xsl:value-of select='@type'/>_t</xsl:otherwise>
++          <xsl:otherwise>llrp_<xsl:value-of select='@type'/>_t </xsl:otherwise>
+         </xsl:choose>
+       </xsl:with-param>
+       <xsl:with-param name='MemberName'>
+         <xsl:choose>
+           <xsl:when test='@enumeration and @type = "u8v"'><xsl:value-of select='@name'/></xsl:when>
+-          <xsl:when test='@enumeration'>e<xsl:value-of select='@name'/></xsl:when>
++          <xsl:when test='@enumeration'> e<xsl:value-of select='@name'/></xsl:when>
+           <xsl:otherwise><xsl:value-of select='@name'/></xsl:otherwise>
+        </xsl:choose>
+       </xsl:with-param>

@@ -1,15 +1,17 @@
---- Makefile.old	2013-06-24 13:53:39.310958341 -0700
-+++ Makefile	2013-06-24 13:53:50.451101666 -0700
-@@ -16,10 +16,10 @@
+--- Makefile.old	2011-10-31 12:27:29.000000000 -0400
++++ Makefile	2013-06-24 19:31:33.000000000 -0400
+@@ -16,10 +16,11 @@
  ############################################################################
  
  #CFLAGS = -O -Wall
 -AR              = ar
 -CC              = gcc
+-CFLAGS          = -g -Wall
+-CINCLUDES	= -I ../../opensource/include/libxml2
++MFLOAT          = hard
 +AR              = arm-linux-gnueabi-ar
 +CC              = arm-linux-gnueabi-gcc
- CFLAGS          = -g -Wall
--CINCLUDES	= -I ../../opensource/include/libxml2
++CFLAGS          = -g -Wall -mfloat-abi=$(MFLOAT)
 +CINCLUDES	= -I ../../opensource_arm/include/libxml2
  
  LLRPDEF         = ../../Definitions/Core/llrp-1x0-def.xml

@@ -1,13 +1,16 @@
---- Makefile.old	2013-06-24 13:30:09.256614015 -0700
-+++ Makefile	2013-06-24 13:30:19.744752770 -0700
-@@ -16,8 +16,8 @@
+--- Makefile.old	2008-01-29 19:56:25.000000000 -0500
++++ Makefile	2013-06-24 19:32:25.000000000 -0400
+@@ -16,9 +16,10 @@
  ############################################################################
  
  #CFLAGS     = -O -Wall -I..
 -AR          = ar
 -CC          = gcc
+-CFLAGS      = -g -Wall -I..
++MFLOAT      = hard
 +AR          = arm-linux-gnueabi-ar
 +CC          = arm-linux-gnueabi-gcc
- CFLAGS      = -g -Wall -I..
++CFLAGS      = -g -Wall -I.. -mfloat-abi=$(MFLOAT)
  
  LLRPORGDEF      = ../../../Definitions/LLRP.org/LLRPOrgExampleDef.xml
+ 

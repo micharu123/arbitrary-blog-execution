@@ -1,0 +1,15 @@
+--- /home/micharu123/Documents/old_NfWebCrypto/crypto/CadmiumCryptoImpl.cpp	2014-03-07 22:57:46.909554454 -0500
++++ /home/micharu123/Documents/Projects/NfWebCrypto/crypto/CadmiumCryptoImpl.cpp	2014-02-20 01:25:05.075269102 -0500
+@@ -1282,9 +1282,10 @@
+     ivVec = str64toVuc(ivInStr64);
+     if (ivVec.empty())
+         return CAD_ERR_BADENCODING;
+-    if (ivVec.size() < AesCbcCipher::BLOCKSIZE) // same block size for all AES ciphers
++    // Allow AES-GCM to have IV of size 96bits.
++    if (ivVec.size() < AesCbcCipher::BLOCKSIZE && ivVec.size() != 12) // same block size for all AES ciphers
+     {
+-        DLOG() << "CadmiumCrypto::aes: IV too short, must be " <<
++        DLOG() << "CadmiumCrypto::aes: IV too short, " << ivVec.size() << "bytes, must be " <<
+                 AesCbcCipher::BLOCKSIZE << " bytes or longer\n";
+         return CAD_ERR_BADIV;
+     }

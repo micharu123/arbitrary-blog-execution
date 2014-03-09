@@ -1,0 +1,29 @@
+--- /home/micharu123/Documents/old_NfWebCrypto/web/nfcrypto.js	2014-03-07 22:57:47.441554457 -0500
++++ /home/micharu123/Documents/Projects/msdadapter/src/nfcrypto.js	2014-02-16 21:33:43.397096414 -0500
+@@ -384,7 +384,7 @@
+             algorithm: algorithm,
+             keyHandle: (key == null) ? key : key.handle,
+             signature: (signature == null) ? signature : b64encode(signature),
+-            buffer: (buffer == null) ? buffer : b64encode(buffer),
++            buffer: (buffer == null) ? buffer : b64encode(buffer)
+         };
+         messenger.postMessage(type, args);
+ 
+@@ -441,7 +441,7 @@
+             baseKeyHandle: (baseKey == null) ? baseKey : baseKey.handle,
+             derivedAlgorithm : derivedKeyType,
+             keyHandle: (key == null) ? key : key.handle,
+-            keyName: keyName,
++            keyName: keyName
+         };
+         messenger.postMessage(type, args);
+ 
+@@ -469,7 +469,7 @@
+             } else {
+                 newObj = {};
+             }
+-            for (i in this) {
++            for (var i in this) {
+               if (i == 'clone') continue;
+               if (this[i] && typeof this[i] == "object") {
+                 newObj[i] = this[i].clone();

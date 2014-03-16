@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>GeekletFrame</key>
+	<string>{{-10, 792}, {104, 52}}</string>
+	<key>HasShadow</key>
+	<false/>
+	<key>Identifier</key>
+	<string>org.tynsoe.geeklet.image</string>
+	<key>ImageURL</key>
+	<string>http://cont-ch1-1.pandora.com/images/public/amz/8/2/7/8/614223108728_500W_500H.jpg</string>
+	<key>Name</key>
+	<string>HermesAlbumArt</string>
+	<key>RefreshInterval</key>
+	<integer>432000</integer>
+</dict>
+</plist>

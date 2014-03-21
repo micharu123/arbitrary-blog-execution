@@ -1,0 +1,20 @@
+--- darwin-slib.def	2010-07-27 15:02:57.000000000 -0400
++++ /Users/micharu123/Desktop/darwin-slib.def	2014-03-20 20:55:01.000000000 -0400
+@@ -68,7 +68,7 @@
+ 
+ # CFLAGS is the set of C compiler options used when compiling the shared
+ # library.  CFLAGS should always include CCDEFS.
+-CFLAGS = $(MFLAGS) -fPIC -fno-common -g -O $(CCDEFS) $(LC) -I$(INCDIR) -arch i386 -arch x86_64 -arch ppc
++CFLAGS = $(MFLAGS) -fPIC -fno-common -g -O $(CCDEFS) $(LC) -I$(INCDIR) -arch x86_64
+ 
+ # WFDBLIB_BASENAME is the name, without version numbers, of the alternate
+ # library.  WFDBLIB_SONAME is the shared object name ("soname") of the
+@@ -93,7 +93,7 @@
+ # components have been compiled separately;  the list of *.o files that
+ # make up the library will be appended to BUILDLIB.
+ BUILDLIB = gcc $(MFLAGS) -dynamiclib \
+- -arch i386 -arch x86_64 -arch ppc \
++ -arch x86_64 \
+  -install_name $(LIBDIR)/$(WFDBLIB_SONAME) \
+  -compatibility_version $(MAJOR).$(MINOR) \
+  -current_version $(MAJOR).$(MINOR).$(RELEASE) \

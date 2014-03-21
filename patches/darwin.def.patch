@@ -1,0 +1,20 @@
+--- darwin.def	2010-07-27 15:02:30.000000000 -0400
++++ /Users/micharu123/Desktop/darwin.def	2014-03-20 20:55:05.000000000 -0400
+@@ -74,7 +74,7 @@
+ 
+ # CFLAGS is the set of C compiler options.  CFLAGS should always include
+ # CCDEFS.
+-CFLAGS = $(MFLAGS) -g -O $(CCDEFS) $(LC) -I$(INCDIR) -arch i386 -arch x86_64 -arch ppc
++CFLAGS = $(MFLAGS) -g -O $(CCDEFS) $(LC) -I$(INCDIR) -arch x86_64
+ 
+ # LDFLAGS is appended to the C compiler command line to specify loading the
+ # WFDB library.
+@@ -146,7 +146,7 @@
+ XLIBDIR = $(XHOME)/lib
+ 
+ # WCFLAGS is the set of C compiler options to use when compiling WAVE.
+-WCFLAGS = $(CFLAGS) -I$(OWINCDIR) -I$(XINCDIR) -arch i386
++WCFLAGS = $(CFLAGS) -I$(OWINCDIR) -I$(XINCDIR)
+ 
+ # HELPOBJ can be set to "help.o" if you wish to recompile the XView spot help
+ # functions in "wave/help.c" (recommended under Linux).
